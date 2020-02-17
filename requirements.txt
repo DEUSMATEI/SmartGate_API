@@ -1,0 +1,6 @@
+Flask
+flask_restful
+configparser
+requests
+objectpath
+uwsgi
