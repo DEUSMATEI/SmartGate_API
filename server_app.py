@@ -22,6 +22,7 @@ parser.add_argument('state', type=str, required=True)
 app = Flask(__name__)
 api= Api(app)
 
+@app.before_first_request
 def loadConfig():
     global CONFIG_APIKEY
     try:
@@ -68,8 +69,7 @@ api.add_resource(Weather, '/weather')
 
 #Start Server
 if __name__ == '__main__':
-    try:
-        loadConfig()   
+    try:        
         app.run(port='5001', debug=True)        
     except:
         print("Server can't start")
