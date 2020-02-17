@@ -22,6 +22,7 @@ parser.add_argument('state', type=str, required=True)
 app = Flask(__name__)
 api= Api(app)
 
+@app.before_first_request
 def loadConfig():
     global CONFIG_APIKEY
     try:
@@ -56,8 +57,6 @@ def get_weather(apiKey, city, state):
 
 class Weather(Resource):
     def get(self):
-        #load config
-        loadConfig()
         #get city and state from arg
         args = parser.parse_args()
         city = args['city']
@@ -65,6 +64,7 @@ class Weather(Resource):
 
         #return required data for given city 
         return get_weather(CONFIG_APIKEY, city, state)
+
 
 api.add_resource(Weather, '/weather')
 
