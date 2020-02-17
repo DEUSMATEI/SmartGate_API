@@ -67,9 +67,12 @@ class Weather(Resource):
 api.add_resource(Weather, '/weather')
 
 #Start Server
-if __name__ == '__main__':
-    try:
-        loadConfig()   
-        app.run(port='5001', debug=True)        
-    except:
-        print("Server can't start")
+def start_serv():
+    if __name__ == '__main__':
+        try:
+            loadConfig()   
+            app.run(port='5001', debug=True)        
+        except:
+            print("Server can't start")
+
+start_serv()
