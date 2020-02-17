@@ -1,3 +1,5 @@
+from flask import Flask
+from flask_restful import Resource, Api, reqparse
 from configparser import ConfigParser
 import requests
 import objectpath
@@ -10,6 +12,15 @@ CONFIG_REQUIRED_DATA = [
 ]
 
 CONFIG_APIKEY = ''
+
+
+#configure parameters
+parser = reqparse.RequestParser()
+parser.add_argument('city', type=str, required=True)
+parser.add_argument('state', type=str, required=True)
+
+app = Flask(__name__)
+api= Api(app)
 
 def loadConfig():
     global CONFIG_APIKEY
@@ -42,10 +53,23 @@ def get_weather(apiKey, city, state):
             
     #return required data in Json format
     return (data)    
-    
+
+class Weather(Resource):
+    def get(self):
+        #get city and state from arg
+        args = parser.parse_args()
+        city = args['city']
+        state = args['state']       
+
+        #return required data for given city 
+        return get_weather(CONFIG_APIKEY, city, state)
+
+api.add_resource(Weather, '/weather')
+
 #Start Server
 if __name__ == '__main__':
     try:
-        loadConfig()        
+        loadConfig()   
+        app.run(port='5001', debug=True)        
     except:
         print("Server can't start")
