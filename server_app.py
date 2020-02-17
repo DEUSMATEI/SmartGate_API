@@ -56,6 +56,8 @@ def get_weather(apiKey, city, state):
 
 class Weather(Resource):
     def get(self):
+        #load config
+        loadConfig()
         #get city and state from arg
         args = parser.parse_args()
         city = args['city']
@@ -67,12 +69,8 @@ class Weather(Resource):
 api.add_resource(Weather, '/weather')
 
 #Start Server
-def start_serv():
-    if __name__ == '__main__':
-        try:
-            loadConfig()   
-            app.run(port='5001', debug=True)        
-        except:
-            print("Server can't start")
-
-start_serv()
+if __name__ == '__main__':
+    try:         
+        app.run(port='5001', debug=True)        
+    except:
+        print("Server can't start")
