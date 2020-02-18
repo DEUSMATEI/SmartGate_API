@@ -33,6 +33,12 @@ def loadConfig():
     except:
         print("Can't load config file")
  
+@app.after_request 
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = 'https://ui-weather.herokuapp.com'
+    return response
+
 def get_weather(apiKey, city, state):
 
     #get data from openweathermap API
