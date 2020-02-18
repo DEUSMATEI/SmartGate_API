@@ -50,8 +50,8 @@ def loadConfig():
         CONFIG_APIKEY = parser.get('DEFAULT','API_KEY')
         #load allowed origin
         CONFIG_ACC_CONTROL_ALLOW_ORIGIN = parser.get('DEFAULT','ACC_CONTROL_ALLOW_ORIGIN')    
-    except:
-        print("Can't load config file")
+    except:        
+        abort(500)
  
 #
 # after_request(response)
